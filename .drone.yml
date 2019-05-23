@@ -9,3 +9,12 @@ steps:
   when:
     event:
     - pull_request
+
+- name: build
+  image: node:10.15.3-jessie
+  commands:
+  - export STAGING_BRANCH=pr$DRONE_PULL_REQUEST
+  - yarn build
+  when:
+    event:
+    - pull_request
