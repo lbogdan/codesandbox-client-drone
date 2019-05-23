@@ -1,10 +1,21 @@
 kind: pipeline
 name: default
 
+clone:
+  disable: true
+
 steps:
+- name: clone
+  image: drone/git
+  commands:
+  - clone
+  when:
+    event:
+    - pull_request
+
 - name: install packages
   image: node:10.15.3-jessie
-  devices:
+  volumes:
   - name: yarn-cache
     path: /usr/local/share/.cache/yarn/v4
   commands:
@@ -24,3 +35,8 @@ steps:
     status:
     - success
     - failure
+
+volumes:
+- name: yarn-cache
+  host:
+    path: /var/lib/docker/volumes/yarn-cache/_data
