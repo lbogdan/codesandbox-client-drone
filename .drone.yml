@@ -1,0 +1,11 @@
+kind: pipeline
+name: default
+
+steps:
+- name: install packages
+  image: node:10.15.3-jessie
+  commands:
+  - yarn
+  when:
+    event:
+    - pull_request
