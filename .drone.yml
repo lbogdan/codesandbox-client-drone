@@ -26,5 +26,6 @@ steps:
     - failure
 
 volumes:
-  name: yarn-cache
-  path: /var/lib/docker/volumes/yarn-cache/_data
+- name: yarn-cache
+  host:
+    path: /var/lib/docker/volumes/yarn-cache/_data
