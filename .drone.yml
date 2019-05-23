@@ -18,3 +18,6 @@ steps:
   when:
     event:
     - pull_request
+    status:
+    - success
+    - failure
