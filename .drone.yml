@@ -24,3 +24,7 @@ steps:
     status:
     - success
     - failure
+
+volumes:
+  name: yarn-cache
+  path: /var/lib/docker/volumes/yarn-cache/_data
