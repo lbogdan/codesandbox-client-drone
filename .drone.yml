@@ -4,7 +4,7 @@ name: default
 steps:
 - name: install packages
   image: node:10.15.3-jessie
-  volumes:
+  devices:
   - name: yarn-cache
     path: /usr/local/share/.cache/yarn/v4
   commands:
@@ -24,8 +24,3 @@ steps:
     status:
     - success
     - failure
-
-volumes:
-- name: yarn-cache
-  host:
-    path: /var/lib/docker/volumes/yarn-cache/_data
