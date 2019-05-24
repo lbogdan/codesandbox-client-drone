@@ -1,18 +1,6 @@
 kind: pipeline
 name: default
 
-clone:
-  disable: true
-
-steps:
-- name: clone
-  image: drone/git
-  commands:
-  - clone
-  when:
-    event:
-    - pull_request
-
 - name: restore node_modules cache
   image: codesandbox-cache:1
   settings:
