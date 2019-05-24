@@ -1,6 +1,7 @@
 kind: pipeline
 name: default
 
+steps:
 - name: restore node_modules cache
   image: codesandbox-cache:1
   settings:
