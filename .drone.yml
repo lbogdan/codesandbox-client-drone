@@ -65,4 +65,3 @@ volumes:
 - name: node_modules-cache
   host:
     path: /var/lib/docker/volumes/node_modules-cache/_data
-
