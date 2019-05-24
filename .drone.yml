@@ -13,6 +13,17 @@ steps:
     event:
     - pull_request
 
+- name: restore node_modules cache
+  image: codesandbox-cache:1
+  settings:
+    restore: true
+  volumes:
+  - name: node_modules-cache
+    path: /cache
+  when:
+    event:
+    - pull_request
+
 - name: install packages
   image: node:10.15.3-jessie
   volumes:
@@ -36,7 +47,21 @@ steps:
     - success
     - failure
 
+- name: rebuild node_modules cache
+  image: codesandbox-cache:1
+  settings:
+    rebuild: true
+  volumes:
+  - name: node_modules-cache
+    path: /cache
+  when:
+    event:
+    - pull_request
+
 volumes:
 - name: yarn-cache
   host:
     path: /var/lib/docker/volumes/yarn-cache/_data
+- name: node_modules-cache
+  host:
+    path: /var/lib/docker/volumes/node_modules-cache/_data
