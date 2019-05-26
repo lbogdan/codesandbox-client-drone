@@ -47,6 +47,7 @@ steps:
   when:
     event:
     - pull_request
+    - push
 
 volumes:
 - name: yarn-cache
