@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: default
 
@@ -54,3 +55,8 @@ volumes:
 - name: node_modules-cache
   host:
     path: /var/lib/docker/volumes/node_modules-cache/_data
+---
+kind: signature
+hmac: 5d73b1b8261adcbad746537461f4b13fd96b4b1f251ad50b9340b6babe5dbfbb
+
+...
