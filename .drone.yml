@@ -20,7 +20,7 @@ steps:
   - name: yarn-cache
     path: /usr/local/share/.cache/yarn/v4
   commands:
-  - yarn
+  - yar
   when:
     event:
     - pull_request
