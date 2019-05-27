@@ -62,6 +62,9 @@ steps:
   when:
     event:
     - pull_request
+    status:
+    - success
+    - failure
 
 # - name: rebuild node_modules cache
 #   image: codesandbox-cache:1
