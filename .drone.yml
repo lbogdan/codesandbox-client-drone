@@ -25,27 +25,27 @@ steps:
     event:
     - pull_request
 
-- name: build
-  image: node:10.15.3-jessie
-  commands:
-  - export STAGING_BRANCH=pr$DRONE_PULL_REQUEST
-  - yarn build
-  when:
-    event:
-    - pull_request
+# - name: build
+#   image: node:10.15.3-jessie
+#   commands:
+#   - export STAGING_BRANCH=pr$DRONE_PULL_REQUEST
+#   - yarn build
+#   when:
+#     event:
+#     - pull_request
 
-- name: deploy
-  image: codesandbox-deploy:1
-  settings:
-    domain: build.csb.dev
-  volumes:
-  - name: docker_sock
-    path: /var/run/docker.sock
-  - name: deployments
-    path: /root/docker/deployments
-  when:
-    event:
-    - pull_request
+# - name: deploy
+#   image: codesandbox-deploy:1
+#   settings:
+#     domain: build.csb.dev
+#   volumes:
+#   - name: docker_sock
+#     path: /var/run/docker.sock
+#   - name: deployments
+#     path: /root/docker/deployments
+#   when:
+#     event:
+#     - pull_request
 
 - name: slack notification
   image: plugins/slack
@@ -53,20 +53,26 @@ steps:
     webhook:
       from_secret: slack_webhook
     channel: infra
+    template: >
+      {{#success build.status}}
+        PR{{build.pull}} successfully built. You can access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+      {{else}}
+        Error building PR{{build.pull}}. You can check what happened <{{build.link}}|here>.
+      {{/success}}
   when:
     event:
     - pull_request
 
-- name: rebuild node_modules cache
-  image: codesandbox-cache:1
-  settings:
-    rebuild: true
-  volumes:
-  - name: node_modules-cache
-    path: /cache
-  when:
-    event:
-    - pull_request
+# - name: rebuild node_modules cache
+#   image: codesandbox-cache:1
+#   settings:
+#     rebuild: true
+#   volumes:
+#   - name: node_modules-cache
+#     path: /cache
+#   when:
+#     event:
+#     - pull_request
 
 volumes:
 - name: yarn-cache
