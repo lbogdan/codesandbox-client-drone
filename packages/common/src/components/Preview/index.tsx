@@ -74,7 +74,7 @@ type State = {
 
 const getSSEUrl = (sandbox?: Sandbox, initialPath: string = '') =>
   `https://${sandbox ? `${sandbox.id}.` : ''}sse.${
-    process.env.NODE_ENV === 'development' ? 'codesandbox.io' : host()
+    (process.env.NODE_ENV === 'development' || process.env.STAGING) ? 'codesandbox.io' : host()
   }${initialPath}`;
 
 interface IModulesByPath {
