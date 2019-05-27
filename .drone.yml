@@ -45,6 +45,13 @@ steps:
   - name: deployments
     path: /root/docker/deployments
 
+- name: slack notification
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+    channel: infra
+
 - name: rebuild node_modules cache
   image: codesandbox-cache:1
   settings:
