@@ -55,9 +55,9 @@ steps:
     channel: infra
     template: >
       {{#success build.status}}
-        PR{{build.pull}} successfully built. You can access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+        👍 {{repo.owner}}/{{repo.name}} pull request \#{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
       {{else}}
-        Error building PR{{build.pull}}. You can check what happened <{{build.link}}|here>.
+        👎 {{repo.owner}}/{{repo.name}} pull request \#{{build.pull}} building failed. See what happened <{{build.link}}|here>.
       {{/success}}
   when:
     event:
