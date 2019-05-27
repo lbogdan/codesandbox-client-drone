@@ -40,7 +40,7 @@ steps:
 - name: deploy
   image: codesandbox-deploy:1
   volumes:
-  - name: docker_dock
+  - name: docker_sock
     path: /var/run/docker.sock
   - name: deployments
     path: /root/docker/deployments
