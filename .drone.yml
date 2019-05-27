@@ -20,7 +20,7 @@ steps:
   - name: yarn-cache
     path: /usr/local/share/.cache/yarn/v4
   commands:
-  - yar
+  - yarn
   when:
     event:
     - pull_request
@@ -55,9 +55,9 @@ steps:
     channel: infra
     template: >
       {{#success build.status}}
-        👍 {{repo.owner}}/{{repo.name}} pull request \#{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+        👍 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
       {{else}}
-        👎 {{repo.owner}}/{{repo.name}} pull request \#{{build.pull}} building failed. See what happened <{{build.link}}|here>.
+        👎 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} building failed. See what happened <{{build.link}}|here>.
       {{/success}}
   when:
     event:
