@@ -4,9 +4,9 @@
 
 ![Banner](https://codesandbox.io/static/img/banner.png)
 
-An online code editor tailored for web applications.
+An online cool code editor tailored for web applications.
 
-This project was bootstrapped with
+Thiscool  project was bootstrapped with
 [Create React App](https://github.com/facebookincubator/create-react-app).
 
 The JavaScript community has sharing as its selling point. It has the biggest
