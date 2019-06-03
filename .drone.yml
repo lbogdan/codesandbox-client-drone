@@ -1,4 +1,3 @@
----
 kind: pipeline
 name: default
 
@@ -47,24 +46,24 @@ steps:
 #     event:
 #     - pull_request
 
-- name: slack notification
-  image: plugins/slack
-  settings:
-    webhook:
-      from_secret: slack_webhook
-    channel: infra
-    template: >
-      {{#success build.status}}
-        👍 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
-      {{else}}
-        👎 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} building failed. See what happened <{{build.link}}|here>.
-      {{/success}}
-  when:
-    event:
-    - pull_request
-    status:
-    - success
-    - failure
+# - name: slack notification
+#   image: plugins/slack
+#   settings:
+#     webhook:
+#       from_secret: slack_webhook
+#     channel: infra
+#     template: >
+#       {{#success build.status}}
+#         👍 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+#       {{else}}
+#         👎 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} building failed. See what happened <{{build.link}}|here>.
+#       {{/success}}
+#   when:
+#     event:
+#     - pull_request
+#     status:
+#     - success
+#     - failure
 
 # - name: rebuild node_modules cache
 #   image: codesandbox-cache:1
@@ -76,6 +75,14 @@ steps:
 #   when:
 #     event:
 #     - pull_request
+
+- name: show environment
+  image: node:10.15.3-jessie
+  commands:
+  - printenv
+  when:
+    event:
+    - pull_request
 
 volumes:
 - name: yarn-cache
@@ -90,8 +97,3 @@ volumes:
 - name: deployments
   host:
     path: /root/docker/deployments
----
-kind: signature
-hmac: 5d73b1b8261adcbad746537461f4b13fd96b4b1f251ad50b9340b6babe5dbfbb
-
-...
