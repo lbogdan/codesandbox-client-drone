@@ -97,7 +97,20 @@ volumes:
 trigger:
   event: pull_request
 ---
+kind: pipeline
+name: branch
+
+steps:
+  - name: show environment
+    image: node:10.16.3-jessie
+    commands:
+      - printenv
+
+trigger:
+  event: push
+  branch: master
+---
 kind: signature
-hmac: 627bb1991de9c08b3d1dd3a396089ea452b04664d07b905fae32017c5a6ba3b6
+hmac: c8842d343b833a18eaa94f9e4e11075ec72c2da09ec2b26bb3a7718c282e5e2b
 
 ...
