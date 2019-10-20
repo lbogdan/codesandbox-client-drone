@@ -106,11 +106,82 @@ steps:
     commands:
       - printenv
 
+  - name: restore node_modules cache
+    image: lbogdan/codesandbox-cache-plugin:1
+    settings:
+      restore: true
+    volumes:
+      - name: node_modules-cache
+        path: /cache
+
+  - name: install packages
+    image: node:10.16.3-jessie
+    volumes:
+      - name: yarn-cache
+        path: /usr/local/share/.cache/yarn/v4
+    commands:
+      - yarn
+
+  - name: build
+    image: node:10.16.3-jessie
+    commands:
+      - export STAGING_BRANCH=$DRONE_BRANCH
+      - yarn build
+
+  # - name: deploy
+  #   image: lbogdan/codesandbox-deploy-plugin:1
+  #   settings:
+  #     domain: &domain build.csb.dev
+  #   volumes:
+  #     - name: docker_sock
+  #       path: /var/run/docker.sock
+  #     - name: deployments
+  #       path: /root/docker/deployments
+
+  # - name: slack notification
+  #   image: plugins/slack
+  #   settings:
+  #     webhook:
+  #       from_secret: slack_webhook
+  #     channel: infra
+  #     template: >
+  #       {{#success build.status}}
+  #         👍 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+  #       {{else}}
+  #         👎 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} building failed. See what happened <{{build.link}}|here>.
+  #       {{/success}}
+  #   when:
+  #     status:
+  #       - success
+  #       - failure
+
+  - name: rebuild node_modules cache
+    image: lbogdan/codesandbox-cache-plugin:1
+    settings:
+      rebuild: true
+    volumes:
+      - name: node_modules-cache
+        path: /cache
+
+volumes:
+  - name: yarn-cache
+    host:
+      path: /var/lib/docker/volumes/yarn-cache/_data
+  - name: node_modules-cache
+    host:
+      path: /var/lib/docker/volumes/node_modules-cache/_data
+  # - name: docker_sock
+  #   host:
+  #     path: /var/run/docker.sock
+  # - name: deployments
+  #   host:
+  #     path: /root/docker/deployments
+
 trigger:
   event: push
   branch: master
 ---
 kind: signature
-hmac: c8842d343b833a18eaa94f9e4e11075ec72c2da09ec2b26bb3a7718c282e5e2b
+hmac: 5b09aa325dd7c1642ab4e169bae93d3f63be0dac1b8673cb7ba8da39400c652d
 
 ...
