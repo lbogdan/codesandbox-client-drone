@@ -138,22 +138,22 @@ steps:
       - name: deployments
         path: /root/docker/deployments
 
-  # - name: slack notification
-  #   image: plugins/slack
-  #   settings:
-  #     webhook:
-  #       from_secret: slack_webhook
-  #     channel: infra
-  #     template: >
-  #       {{#success build.status}}
-  #         👍 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} successfully built. Access it at https://pr{{build.pull}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
-  #       {{else}}
-  #         👎 {{repo.owner}}/{{repo.name}} pull request #{{build.pull}} building failed. See what happened <{{build.link}}|here>.
-  #       {{/success}}
-  #   when:
-  #     status:
-  #       - success
-  #       - failure
+  - name: slack notification
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: slack_webhook
+      channel: infra
+      template: >
+        {{#success build.status}}
+          👍 {{repo.owner}}/{{repo.name}} branch #{{build.branch}} successfully built. Access it at https://{{build.branch}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+        {{else}}
+          👎 {{repo.owner}}/{{repo.name}} branch #{{build.branch}} building failed. See what happened <{{build.link}}|here>.
+        {{/success}}
+    when:
+      status:
+        - success
+        - failure
 
   - name: rebuild node_modules cache
     image: lbogdan/codesandbox-cache-plugin:1
@@ -170,18 +170,18 @@ volumes:
   - name: node_modules-cache
     host:
       path: /var/lib/docker/volumes/node_modules-cache/_data
-  # - name: docker_sock
-  #   host:
-  #     path: /var/run/docker.sock
-  # - name: deployments
-  #   host:
-  #     path: /root/docker/deployments
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
+  - name: deployments
+    host:
+      path: /root/docker/deployments
 
 trigger:
   event: push
   branch: master
 ---
 kind: signature
-hmac: f4ba210cc8b3f07b341d1d0730caea937f94b241c14c5b0a086994cc0c8e488f
+hmac: 5ae25a81ad692083b2829f28f959dc3fb75381990a6c1fd8a82bfc53cf4d2275
 
 ...
