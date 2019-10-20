@@ -146,9 +146,9 @@ steps:
       channel: infra
       template: >
         {{#success build.status}}
-          👍 {{repo.owner}}/{{repo.name}} branch #{{build.branch}} successfully built. Access it at https://{{build.branch}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
+          👍 {{repo.owner}}/{{repo.name}} branch {{build.branch}} successfully built. Access it at https://{{build.branch}}.build.csb.dev/ and see the build logs <{{build.link}}|here>.
         {{else}}
-          👎 {{repo.owner}}/{{repo.name}} branch #{{build.branch}} building failed. See what happened <{{build.link}}|here>.
+          👎 {{repo.owner}}/{{repo.name}} branch {{build.branch}} building failed. See what happened <{{build.link}}|here>.
         {{/success}}
     when:
       status:
@@ -182,6 +182,6 @@ trigger:
   branch: master
 ---
 kind: signature
-hmac: 5ae25a81ad692083b2829f28f959dc3fb75381990a6c1fd8a82bfc53cf4d2275
+hmac: 631bcb18a53254544ead38c57d1dda7cbd8d73c75923ba2b31232c4d85509a8c
 
 ...
