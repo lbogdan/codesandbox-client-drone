@@ -26,7 +26,7 @@ steps:
       - yarn build
 
   - name: deploy
-    image: lbogdan/codesandbox-deploy-plugin:1
+    image: lbogdan/codesandbox-deploy-plugin:2
     settings:
       domain: &domain build.csb.dev
     volumes:
@@ -128,15 +128,15 @@ steps:
       - export STAGING_BRANCH=$DRONE_BRANCH
       - yarn build
 
-  # - name: deploy
-  #   image: lbogdan/codesandbox-deploy-plugin:1
-  #   settings:
-  #     domain: &domain build.csb.dev
-  #   volumes:
-  #     - name: docker_sock
-  #       path: /var/run/docker.sock
-  #     - name: deployments
-  #       path: /root/docker/deployments
+  - name: deploy
+    image: lbogdan/codesandbox-deploy-plugin:2
+    settings:
+      domain: &domain build.csb.dev
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+      - name: deployments
+        path: /root/docker/deployments
 
   # - name: slack notification
   #   image: plugins/slack
@@ -182,6 +182,6 @@ trigger:
   branch: master
 ---
 kind: signature
-hmac: 5b09aa325dd7c1642ab4e169bae93d3f63be0dac1b8673cb7ba8da39400c652d
+hmac: f4ba210cc8b3f07b341d1d0730caea937f94b241c14c5b0a086994cc0c8e488f
 
 ...
